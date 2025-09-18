@@ -1,0 +1,11 @@
+# Ignore logs folder
+logs/
+
+# Ignore compiled Java classes
+*.class
+
+# Ignore Maven build output
+target/
+
+# NetBeans configuration files
+nb-configuration.xml
