@@ -28,10 +28,11 @@ public class DatabaseConnection {
             Properties prop = new Properties();
             prop.load(input);
 
-            URL = prop.getProperty("db.url");       // e.g., jdbc:mysql://localhost:3306/
-            DB_NAME = prop.getProperty("db.name");  // e.g., userdb
-            USER = prop.getProperty("db.user");
-            PASSWORD = prop.getProperty("db.password");
+         // Read from environment variables first, fallback to config.properties
+            URL = System.getenv().getOrDefault("DB_URL", prop.getProperty("db.url"));   
+            DB_NAME = System.getenv().getOrDefault("DB_NAME", prop.getProperty("db.name"));
+            USER = System.getenv().getOrDefault("DB_USER", prop.getProperty("db.user"));
+            PASSWORD = System.getenv().getOrDefault("DB_PASS", prop.getProperty("db.password"));
 
             // Load MySQL driver explicitly
             try {
@@ -43,7 +44,7 @@ public class DatabaseConnection {
 
             // Configure HikariCP
             HikariConfig config = new HikariConfig();
-            config.setJdbcUrl(URL + DB_NAME + "?useSSL=false&serverTimezone=UTC");
+            config.setJdbcUrl(URL + DB_NAME + "?sslmode=require&serverTimezone=UTC");
             config.setUsername(USER);
             config.setPassword(PASSWORD);
             config.setDriverClassName("com.mysql.cj.jdbc.Driver");

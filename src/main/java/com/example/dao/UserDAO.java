@@ -11,6 +11,12 @@ public class UserDAO {
     public UserDAO() {
     }
 
+    
+    /* Dont have a CreateDatabase IF NOT EXISTS method
+    because the database are being created in Aiven via my SQL dump file.
+    */
+    
+    
     // Create users table if it does not exist
     public void createUsersTableIfNotExists() {
         String sql = """
